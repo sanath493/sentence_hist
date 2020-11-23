@@ -50,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwallpaperboat.com%2Ffree-space-background-wallpapers&psig=AOvVaw0G2_9BfM7C9CgMGvj0l1tc&ust=1606257722273000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiCprzeme0CFQAAAAAdAAAAABAN")
+  background-image: url("/src/background.jpg")
   
 }
 .page-header .filter::after {
