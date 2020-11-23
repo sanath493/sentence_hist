@@ -79,7 +79,7 @@ function App() {
                 },
                 { type: 'bar' },
               ]}
-              layout={{ width: 90%, height: 500, title: 'Histogram of Sentence Lengths' }}
+              layout={{ width: '90%', height: 500, title: 'Histogram of Sentence Lengths' }}
             />
             <div style={{ overflowWrap: 'break-word', paddingTop: '10px' }}>{JSON.stringify(response)}</div>
           </Card>
