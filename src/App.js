@@ -48,7 +48,7 @@ function App() {
   return (
     <>
       <div className="page-header">
-        <Container style={{ width: '40vw', height: "40vw" }}>
+        <Container style={{ width: '90vw', height: "50vw" }}>
 
           <Card className="card-register">
             <Form className="register-form">
@@ -93,7 +93,7 @@ function App() {
   return (
     <>
       <div className="page-header">
-        <Container style={{ width: '80vw', height: "40vw" }}>
+        <Container style={{ width: '90vw', height: "50vw" }}>
 
           <Card className="card-register">
             <Form className="register-form">
