@@ -48,7 +48,7 @@ function App() {
   return (
     <>
       <div className="page-header">
-        <Container style={{ width: '90vw', height: "50vw" }}>
+        <Container style={{ width: '40vw', height: "40vw" }}>
 
           <Card className="card-register">
             <Form className="register-form">
@@ -79,7 +79,7 @@ function App() {
                 },
                 { type: 'bar' },
               ]}
-              layout={{ width: '90%', height: 500, title: 'Histogram of Sentence Lengths' }}
+              layout={{ width: 1225, height: 500, title: 'Histogram of Sentence Lengths' }}
             />
             <div style={{ overflowWrap: 'break-word', paddingTop: '10px' }}>{JSON.stringify(response)}</div>
           </Card>
@@ -93,7 +93,7 @@ function App() {
   return (
     <>
       <div className="page-header">
-        <Container style={{ width: '90vw', height: "50vw" }}>
+        <Container style={{ width: '80vw', height: "40vw" }}>
 
           <Card className="card-register">
             <Form className="register-form">
