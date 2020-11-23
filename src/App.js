@@ -22,8 +22,8 @@ function App() {
   let keys_arr = []; let vals_arr = [];
 
   const handleSubmit = () => {
-    //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    axios.post('https://us-central1-sanath-edupuganti.cloudfunctions.net/test?name=' + inputURL, {
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    axios.post(proxyurl+'https://us-central1-sanath-edupuganti.cloudfunctions.net/test?name=' + inputURL, {
     })
       .then((response) => {
         var obj = JSON.parse(JSON.stringify(response.data));
