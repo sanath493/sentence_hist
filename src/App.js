@@ -14,10 +14,6 @@ function App() {
   function changeBackground1(e) {
     e.target.style.background = '#0D5C66';
   }
-  function showloading(e){
-    document.getElementById("btn").value="loading";
-  }
- 
   const [inputURL, setInputURL] = React.useState('');
   const [response, setResponse] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
@@ -26,8 +22,8 @@ function App() {
   let keys_arr = []; let vals_arr = [];
 
   const handleSubmit = () => {
-    //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    axios.post('https://us-central1-sanath-edupuganti.cloudfunctions.net/test?name=' + inputURL, {
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    axios.post(proxyurl + 'https://us-central1-sanath-edupuganti.cloudfunctions.net/test?name=' + inputURL, {
     })
       .then((response) => {
         var obj = JSON.parse(JSON.stringify(response.data));
@@ -106,15 +102,12 @@ function App() {
                 boxSizing: 'border-box'
               }} />
               <Button
-                id='btn'
                 onMouseOver={changeBackground}
                 onMouseLeave={changeBackground1}
-                onClick={showloading}
                 color="danger"
                 type="button"
                 onClick={() => {
                   handleSubmit()
-                  
                 }}
                 style={{ marginLeft: '5rem' }}
               >
