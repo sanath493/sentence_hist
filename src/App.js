@@ -14,6 +14,10 @@ function App() {
   function changeBackground1(e) {
     e.target.style.background = '#0D5C66';
   }
+  function showloading();
+  {
+    document.getElementById("btn").value="Loading";
+  }
   const [inputURL, setInputURL] = React.useState('');
   const [response, setResponse] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
@@ -104,6 +108,7 @@ function App() {
               <Button
                 onMouseOver={changeBackground}
                 onMouseLeave={changeBackground1}
+                onClick={showloading}
                 color="danger"
                 type="button"
                 onClick={() => {
