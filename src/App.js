@@ -17,7 +17,7 @@ function App() {
   function showloading(e){
     document.getElementById("btn").value="loading";
   }
-  const [isShown, setIsShown] = useState(false);
+ 
   const [inputURL, setInputURL] = React.useState('');
   const [response, setResponse] = React.useState([]);
   const [keys, setKeys] = React.useState([]);
