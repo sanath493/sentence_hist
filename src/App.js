@@ -63,7 +63,6 @@ function App() {
               <Button
                 onMouseOver={changeBackground}
                 onMouseLeave={changeBackground1}
-                onClick={() => setIsShown(true)}
                 color="danger"
                 type="button"
                 onClick={() => {
