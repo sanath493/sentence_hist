@@ -14,7 +14,7 @@ function App() {
   function changeBackground1(e) {
     e.target.style.background = '#0D5C66';
   }
-  function showloading();
+  function showloading()
   {
     document.getElementById("btn").value="Loading";
   }
