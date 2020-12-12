@@ -1,10 +1,12 @@
 import React from "react";
 import axios from 'axios';
-import { Button, Card, Container } from "reactstrap";
+// reactstrap component
+
+import { Button, Card, Form, Input, Container } from "reactstrap";
+import Plot from 'react-plotly.js';
 // core components
 import './App.css'
-
-export default function App() {
+function App() {
   function changeBackground(e) {
     e.target.style.background = '#1688D7';
 
@@ -12,159 +14,118 @@ export default function App() {
   function changeBackground1(e) {
     e.target.style.background = '#0D5C66';
   }
-  const [base64, setBase64] = React.useState('');
-  const [imgUrl, setImgURl] = React.useState('');
-  const [fileName, setFileName] = React.useState('');
-  const [vis4OP, setVis4OP] = React.useState('');
-  const [vis5OP, setVis5OP] = React.useState('');
+  function showloading();
+  {
+    document.getElementById("btn").value="Loading";
+  }
+  const [inputURL, setInputURL] = React.useState('');
+  const [response, setResponse] = React.useState([]);
+  const [keys, setKeys] = React.useState([]);
+  const [values, setValues] = React.useState([]);
+  const [showGraph, setShowGraph] = React.useState(false);
+  let keys_arr = []; let vals_arr = [];
 
-  const handleFileRead = async (event) => {
-    const file = event.target.files[0]
-    setFileName(event.target.files[0].name)
-    setBase64(await convertBase64(file))
-    // base64 = await convertBase64(file)
-  }
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file)
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      }
-      fileReader.onerror = (error) => {
-        reject(error);
-      }
-    })
-  }
-  
-  const getVis4 = (e) => {
-    e.preventDefault()
-    const payload = {
-      "name" : base64.substring(23),
-      "file_name" : fileName
-    }
+  const handleSubmit = () => {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    axios.post(proxyurl + 'https://us-central1-sanath-edupuganti.cloudfunctions.net/vis4',payload, {
-      headers: {
-        'Content-Type': `application/json`,
-      }
+    axios.post(proxyurl + 'https://us-central1-sanath-edupuganti.cloudfunctions.net/test?name=' + inputURL, {
     })
       .then((response) => {
-        setVis4OP(response.data)
+        var obj = JSON.parse(JSON.stringify(response.data));
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            var value = obj[key];
+            keys_arr.push(key);
+            vals_arr.push(value);
+          }
+        }
+        setKeys(keys_arr)
+        setValues(vals_arr)
+        setResponse(response.data)
+        setShowGraph(true)
       })
       .catch((error) => {
         console.log(error)
       })
 
-  }
-  const getVis5 = (e) => {
-    e.preventDefault()
-    const payload = {
-      "name" : base64.substring(23),
-      "file_name" : fileName
-    }
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    axios.post(proxyurl + 'https://us-central1-sanath-edupuganti.cloudfunctions.net/vis5',payload, {
-      headers: {
-        'Content-Type': `application/json`,
-      }
-    })
-      .then((response) => {
-        setVis5OP(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const payload = {
-      "name" : base64.substring(23),
-      "file_name" : fileName
-    }
-    // console.log(base64.substring(23))
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    axios.post(proxyurl + 'https://us-central1-sanath-edupuganti.cloudfunctions.net/superres', payload, {
-  
-      headers: {
-        'Content-Type': `application/json`,
-      }
-    })
-      .then((response) => {
-        console.log(response.data)
-        setImgURl(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
   };
+  if(showGraph)
   return (
     <>
       <div className="page-header">
         <Container style={{ width: '90vw', height: "50vw" }}>
 
           <Card className="card-register">
-          <form onChange={handleFileRead}>
-          <div style = {{ marginRight: '33rem', float:'right'}}>
-          <input 
-          name="image"
-          type="file"
-          accept = '.jpeg,.png,.jpg'
-          placeholder="Enter URL" style={{
+            <Form className="register-form">
+              <Input placeholder="Enter URL" type="text" onChange={event => setInputURL(event.target.value)} style={{
                 width: '80%', padding: '12px 20px', margin: '8px 0',
-                boxSizing: 'border-box', marginLeft: '2rem', maxWidth: '210px',
+                boxSizing: 'border-box'
               }} />
-          
-          <Button
-          onMouseOver={changeBackground}
-          onMouseLeave={changeBackground1}
-          color="danger"
-          type="button"
-          onClick= {handleSubmit}
-          style={{  }}
-          >Upload Image</Button>
-          </div>
-
-          <div style = {{float:'left', marginLeft : '20rem'}}>
-          <Button
-          onMouseOver={changeBackground}
-          onMouseLeave={changeBackground1}
-          color="danger"
-          type="button"
-          onClick= {getVis4}
-          style={{ marginLeft: '2rem' }}
-          >Safety Check</Button>
-
-          <Button
-          onMouseOver={changeBackground}
-          onMouseLeave={changeBackground1}
-          color="danger"
-          type="button"
-          onClick= {getVis5}
-          style={{ marginLeft: '2rem' }}
-          >Get labels</Button>
-          </div>
-
-          {imgUrl ? (
-             <Button
-             onMouseOver={changeBackground}
-             onMouseLeave={changeBackground1}
-             color="danger"
-             type="button"
-             href={imgUrl}
-             target="_blank"
-             style={{ marginLeft: '5rem' }}
-             >View Processed Image</Button>
-          // <a>{imgUrl}</a>
-          ): null}
-        {vis4OP ? <div>{vis4OP}</div> : null}
-        {vis5OP ? <div style={{ overflowWrap: 'break-word', paddingTop: '10px' }}>{JSON.stringify(vis5OP)}</div> : null}
-          </form>
+              <Button
+                onMouseOver={changeBackground}
+                onMouseLeave={changeBackground1}
+                color="danger"
+                type="button"
+                onClick={() => {
+                  handleSubmit()
+                }}
+                style={{ marginLeft: '5rem' }}
+              >
+                Get Results
+                  </Button>
+            </Form>
+            <Plot
+              data={[
+                {
+                  x: keys,
+                  y: values,
+                  type: 'bar',
+                  marker: { color: '#0D5C66' },
+                },
+                { type: 'bar' },
+              ]}
+              layout={{ width: 1225, height: 500, title: 'Histogram of Sentence Lengths' }}
+            />
+            <div style={{ overflowWrap: 'break-word', paddingTop: '10px' }}>{JSON.stringify(response)}</div>
           </Card>
         </Container>
-        
+
       </div>
     </>
   );
+
+  if(!showGraph)
+  return (
+    <>
+      <div className="page-header">
+        <Container style={{ width: '90vw', height: "50vw" }}>
+
+          <Card className="card-register">
+            <Form className="register-form">
+              <Input placeholder="Enter URL" type="text" onChange={event => setInputURL(event.target.value)} style={{
+                width: '80%', padding: '12px 20px', margin: '8px 0',
+                boxSizing: 'border-box'
+              }} />
+              <Button
+                onMouseOver={changeBackground}
+                onMouseLeave={changeBackground1}
+                onClick={showloading}
+                color="danger"
+                type="button"
+                onClick={() => {
+                  handleSubmit()
+                }}
+                style={{ marginLeft: '5rem' }}
+              >
+                Get Results
+                  </Button>
+            </Form>
+          </Card>
+        </Container>
+
+      </div>
+    </>
+  );
+
 }
+
+export default App;
